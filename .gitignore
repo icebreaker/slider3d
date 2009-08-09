@@ -4,4 +4,5 @@ release
 *.o
 *.a
 *.so
+slider3d
 slider3d.*
