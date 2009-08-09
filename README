@@ -1,0 +1,18 @@
+Slider3D -- 3D Photo Slide Show (prototype)
+Copyright (c) 2009, Mihail Szabolcs
+
+QT+OpenGL
+
+Features (as of now):
+
+    * scans the current directory for photos (png & jpg)
+    * resizes photos internally before converting them to textures to either 512x512 or 1024x0124; so it should work fine with most video cards.
+    * keeps the original aspect ratio of the photos
+    * tries to activate and use 4x multi-sampling (anti-aliasing) if possible
+    * multi-monitor support (by passing in the command line arguments --monitor X ; where X is the desired monitor to use)
+    * simple floor reflection using the Stencil Buffer (it may not work with not T&L cards)
+    * scrolling left/right by using the arrow keys
+    * automatic slide show mode can be switched on / off by pressing 'space' (switches every 3 seconds; two way)
+    * displays file names under the current photo
+    
+More info @ http://www.szabster.net/tag/slider3d

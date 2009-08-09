@@ -1,0 +1,7 @@
+bin
+debug
+release
+*.o
+*.a
+*.so
+slider3d.*
