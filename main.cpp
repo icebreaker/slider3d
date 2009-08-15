@@ -39,6 +39,8 @@
 #include "mainwindow.h"
 #include "texturemanager.h"
 #include "types.h"
+#include "startupdialog.h"
+#include "settings.h"
 
 using namespace GL;
 
@@ -46,50 +48,89 @@ int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 
-	QStringList lArgs = a.arguments();
+	Settings *lSettings = &Settings::getInstance();
+	lSettings->load();
 
-	// TODO: implemenent serializable SETTINGS!!!
-	int lMonitor = 0;
-
-	// arguments?
-	if( lArgs.size() > 1 )
+	bool lShowConfig = false;
+	// PARSE COMMAND LINE ARGUMENTS
 	{
-		// parse
-		for(int i=0;i<lArgs.size()-1;i++)
+		QStringList lArgs = a.arguments();
+		// arguments?
+		if( lArgs.size() > 1 )
 		{
-			if( lArgs[i] == "--monitor" )
-				lMonitor = lArgs[i+1].toInt();
+			// parse
+			for(int i=0;i<lArgs.size();i++)
+			{
+				// FORCE CONFIGURATION DIALOG
+				if( lArgs[i] == "--config" )
+					lShowConfig = true;
+			}
 		}
 	}
 
-	// ask for 4x multi-sampling ... real nice edges :)
-	QGLFormat lGLFrm = QGLFormat::defaultFormat();
-	lGLFrm.setStencil(true);
-	lGLFrm.setAlpha(true);
-	lGLFrm.setDoubleBuffer(true);
-	lGLFrm.setDepth(true);
-	lGLFrm.setAccum(true);
-	lGLFrm.setRgba(true);
-	lGLFrm.setSampleBuffers(true);
-	lGLFrm.setSamples(4);
-	QGLFormat::setDefaultFormat(lGLFrm);
+	//! SHOW STARTUP CONFIGURATION DIALOG
+	if( lSettings->mDontShow == 0 || lShowConfig )
+	{
+		StartupDialog lDlg;
+		lDlg.show();
+
+		//! BAIL OUT ON CANCEL ...
+		if( lDlg.exec() == QDialog::Rejected )
+		{
+			return 13;
+		}
+	}
+
+	//! Setup Default Pixel Format for all QGL Widgets
+	{
+		QGLFormat lGLFrm = QGLFormat::defaultFormat();
+		lGLFrm.setDoubleBuffer(true);
+		lGLFrm.setDepth(true);
+		if( lSettings->mFloor ) // Stencil Buffer
+		{
+			lGLFrm.setStencil(true);
+			lGLFrm.setAlpha(true);
+			lGLFrm.setAccum(true);
+			lGLFrm.setRgba(true);
+		}
+		if( lSettings->mMSSA ) // Multi-Sampling
+		{
+			lGLFrm.setSampleBuffers(true);
+			lGLFrm.setSamples(lSettings->mMSSA);
+		}
+		QGLFormat::setDefaultFormat(lGLFrm);
+	}
 
 	MainWindow w;
 
-	if( lMonitor )
-		w.setGeometry(QApplication::desktop()->availableGeometry(lMonitor));
+	//! Set Target Monitor
+	if( lSettings->mMonitor > -1 && lSettings->mWindowed != 1 )
+	{
+		w.setGeometry(QApplication::desktop()->availableGeometry(lSettings->mMonitor));
+	}
 
-	w.setWindowState(w.windowState() ^ Qt::WindowFullScreen);
+	//! Set FullScreen / Windowed Mode
+	if( lSettings->mWindowed != 1 )
+	{
+		w.setWindowState(w.windowState() ^ Qt::WindowFullScreen);
+	}
+
+	//! Show Main SlideShow Window
 	w.show();
 
+	//! Check the number of photos
 	if( !TextureManager::getInstance().getCount() )
 	{
+		//! Minimize Main Window
+		w.setWindowState(w.windowState() ^ Qt::WindowMinimized);
+
+		//! Bring Message Box to Front
 		QMessageBox lMsg;
-		lMsg.setText("No photos found!");
+		lMsg.setText("No photos found! Are you kidding me?");
 		lMsg.setIcon(QMessageBox::Warning);
 		lMsg.exec();
 
-		// clean-up
+		//! Perform Clean-up and exit ...
 		QApplication::quit();
 		return 0;
 	}

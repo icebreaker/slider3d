@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'startupdialog.h'
 **
-** Created: Sat Aug 8 13:31:33 2009
+** Created: Sat Aug 15 17:50:48 2009
 **      by: The Qt Meta Object Compiler version 61 (Qt 4.5.0)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,16 +23,23 @@ static const uint qt_meta_data_StartupDialog[] = {
        2,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       4,   12, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
+
+ // slots: signature, parameters, type, tag, flags
+      15,   14,   14,   14, 0x0a,
+      25,   14,   14,   14, 0x0a,
+      38,   14,   14,   14, 0x0a,
+      51,   14,   14,   14, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_StartupDialog[] = {
-    "StartupDialog\0"
+    "StartupDialog\0\0addPath()\0removePath()\0"
+    "movePathUp()\0movePathDown()\0"
 };
 
 const QMetaObject StartupDialog::staticMetaObject = {
@@ -58,6 +65,16 @@ int StartupDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QDialog::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: addPath(); break;
+        case 1: removePath(); break;
+        case 2: movePathUp(); break;
+        case 3: movePathDown(); break;
+        default: ;
+        }
+        _id -= 4;
+    }
     return _id;
 }
 QT_END_MOC_NAMESPACE

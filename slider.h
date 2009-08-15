@@ -37,6 +37,8 @@
 #define SLIDER_H
 
 #include "texturemanager.h"
+#include "settings.h"
+
 #include <QtCore/QString>
 #include <QtCore/QList>
 #include <QtCore/QTimer>
@@ -56,7 +58,7 @@ class Slider : public QObject
 
 public:
 	//! Constructor
-	Slider(const QString &pDir, const int pMax = 10);
+	Slider(const int pMax = 10);
 	//! Destructor
 	virtual ~Slider();
 
@@ -129,6 +131,8 @@ protected:
 	QTimer mPrevTimer;
 	//! Slideshow On/Off flag
 	bool mSlideShow;
+	//! Settings Instance
+	Settings *mSettings;
 };
 
 #endif // SLIDER_H

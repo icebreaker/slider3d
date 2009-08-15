@@ -40,6 +40,8 @@
 #include <QtCore/QDir>
 #include <QtCore/QDebug>
 
+#include "defines.h"
+
 using namespace GL;
 
 TextureManager::TextureManager() :	mEmptyTexture(new Texture),
@@ -52,57 +54,52 @@ TextureManager::~TextureManager()
 {
 	if( !mEmptyTexture->drop() )
 	{
+#ifdef _DEBUG
 		qDebug() << "Warning: [Texture] EmptyTexture was not released properly";
+#endif
 	}
 	else
 	{
+#ifdef _DEBUG
 		qDebug() << "Success: [Texture] EmptyTexture dropped";
+#endif
 	}
 	mEmptyTexture = 0;
 }
 
-void TextureManager::setBaseDir(const QString &pDir, bool pScan)
+void TextureManager::scanDir(const QString &pDir, const bool pRecursive)
 {
-	mBaseDir = pDir;
+	Q_UNUSED(pRecursive);
+
+	QString lPath = pDir;
 
 	// append trailing slash ...
-	if( !mBaseDir.endsWith("/") )
-		mBaseDir.append("/");
+	if( !lPath.endsWith(QDir::separator()) )
+		lPath += QDir::separator();
 
-	// pre-scan (only once!)
-	if(pScan && !mNumTextures)
+	QStringList lFilters;
+	lFilters.append("*.png");
+	lFilters.append("*.jpg");
+	lFilters.append("*.jpeg");
+
+	QDir lDir(lPath);
+	lDir.setNameFilters(lFilters);
+	lDir.setSorting(QDir::Name);
+
+	QStringList lFiles = lDir.entryList();
+
+	QStringList::const_iterator lIt		= lFiles.begin();
+	QStringList::const_iterator lEnd	= lFiles.end();
+
+	// insert into HASH map
+	for( ; lIt != lEnd; ++lIt )
 	{
-		QStringList lFilters;
-		lFilters.append("*.png");
-		lFilters.append("*.jpg");
-		lFilters.append("*.jpeg");
-
-		QDir lDir(mBaseDir);
-		lDir.setNameFilters(lFilters);
-		lDir.setSorting(QDir::Name);
-
-		QStringList lFiles = lDir.entryList();
-
-		QStringList::const_iterator lIt		= lFiles.begin();
-		QStringList::const_iterator lEnd	= lFiles.end();
-
-		// create HASH map
-		for( ; lIt != lEnd; ++lIt )
-		{
-			const QString lFileName = mBaseDir + (*lIt);
-			mTextures.insert(lFileName,new Texture(lFileName));
-		}
-
-		//qDebug() << mTextures;
-
-		//
-		mNumTextures = lFiles.size();
+		const QString lFileName = lPath + (*lIt);
+		mTextures.insert(lFileName,new Texture(lFileName));
 	}
-}
 
-QString &TextureManager::getBaseDir(void)
-{
-	return mBaseDir;
+	//
+	mNumTextures += lFiles.size();
 }
 
 int TextureManager::getCount( void ) const
@@ -166,10 +163,14 @@ bool TextureManager::remove( const QString &pFileName )
 
 	Texture *lTexture = lIt.value();
 
+#ifdef _DEBUG
 	if( !lTexture->drop() ) // WARNING
 		qDebug() << "Warning: [Texture] " << lIt.key() << " is begin used.";
 	else
 		qDebug() << "Success: [Texture] " << lIt.key() << " dropped";
+#else
+	lTexture->drop();
+#endif
 
 	// remove it anyway
 	mTextures.erase(lIt);
@@ -189,6 +190,7 @@ void TextureManager::removeAll( void )
 	{
 		// TODO: just spit warning, but we should
 		// really clean it up ...
+#ifdef _DEBUG
 		if( !lIt.value()->drop() )
 		{
 			qDebug() << "Warning: [Texture] " << lIt.key() << " was not released properly";
@@ -197,6 +199,9 @@ void TextureManager::removeAll( void )
 		{
 			qDebug() << "Success: [Texture] " << lIt.key() << " dropped";
 		}
+#else
+		lIt.value()->drop();
+#endif
 	}
 
 	mTextures.clear();

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading ui file 'startupdialog.ui'
 **
-** Created: Sat Aug 8 13:30:54 2009
+** Created: Sat Aug 15 19:10:28 2009
 **      by: Qt User Interface Compiler version 4.5.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling ui file!
@@ -22,8 +22,12 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QVBoxLayout>
+#include <QtGui/QListWidget>
+#include <QtGui/QPushButton>
+#include <QtGui/QSpinBox>
+#include <QtGui/QToolBox>
+#include <QtGui/QToolButton>
+#include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -31,115 +35,156 @@ class Ui_StartupDialog
 {
 public:
     QDialogButtonBox *buttonBox;
+    QCheckBox *dontshow;
+    QToolBox *toolBox;
+    QWidget *page;
     QGroupBox *groupBox;
-    QVBoxLayout *verticalLayout_3;
-    QComboBox *comboBox;
-    QGroupBox *groupBox_2;
-    QVBoxLayout *verticalLayout;
-    QCheckBox *checkBox;
-    QCheckBox *checkBox_7;
-    QLineEdit *lineEdit;
-    QGroupBox *groupBox_3;
-    QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout;
-    QLabel *label;
-    QComboBox *comboBox_2;
-    QCheckBox *checkBox_2;
-    QCheckBox *checkBox_3;
-    QCheckBox *checkBox_5;
-    QCheckBox *checkBox_6;
-    QCheckBox *checkBox_4;
+    QComboBox *monitor;
+    QGroupBox *groupBox_2;
+    QHBoxLayout *horizontalLayout_2;
+    QComboBox *res;
+    QCheckBox *windowed;
+    QGroupBox *groupBox_5;
+    QHBoxLayout *horizontalLayout_7;
+    QLabel *label_6;
+    QSpinBox *timeout;
+    QLabel *label_7;
+    QWidget *page_2;
+    QGroupBox *groupBox_4;
+    QHBoxLayout *horizontalLayout_6;
+    QComboBox *mssa;
+    QCheckBox *floor;
+    QCheckBox *labels;
+    QWidget *page_3;
+    QListWidget *paths;
+    QPushButton *addfolder;
+    QPushButton *removefolder;
+    QCheckBox *subdirs;
+    QToolButton *moveup;
+    QToolButton *movedown;
 
     void setupUi(QDialog *StartupDialog)
     {
         if (StartupDialog->objectName().isEmpty())
             StartupDialog->setObjectName(QString::fromUtf8("StartupDialog"));
-        StartupDialog->resize(426, 391);
+        StartupDialog->resize(614, 310);
         buttonBox = new QDialogButtonBox(StartupDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setGeometry(QRect(340, 10, 81, 101));
+        buttonBox->setGeometry(QRect(520, 10, 81, 101));
         buttonBox->setOrientation(Qt::Vertical);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
-        groupBox = new QGroupBox(StartupDialog);
+        dontshow = new QCheckBox(StartupDialog);
+        dontshow->setObjectName(QString::fromUtf8("dontshow"));
+        dontshow->setGeometry(QRect(430, 280, 171, 23));
+        dontshow->setChecked(false);
+        toolBox = new QToolBox(StartupDialog);
+        toolBox->setObjectName(QString::fromUtf8("toolBox"));
+        toolBox->setGeometry(QRect(10, 10, 501, 271));
+        page = new QWidget();
+        page->setObjectName(QString::fromUtf8("page"));
+        page->setGeometry(QRect(0, 0, 501, 195));
+        groupBox = new QGroupBox(page);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(10, 10, 151, 63));
-        groupBox->setFlat(false);
-        verticalLayout_3 = new QVBoxLayout(groupBox);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        comboBox = new QComboBox(groupBox);
-        comboBox->setObjectName(QString::fromUtf8("comboBox"));
-
-        verticalLayout_3->addWidget(comboBox);
-
-        groupBox_2 = new QGroupBox(StartupDialog);
-        groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(10, 70, 311, 121));
-        verticalLayout = new QVBoxLayout(groupBox_2);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        checkBox = new QCheckBox(groupBox_2);
-        checkBox->setObjectName(QString::fromUtf8("checkBox"));
-
-        verticalLayout->addWidget(checkBox);
-
-        checkBox_7 = new QCheckBox(groupBox_2);
-        checkBox_7->setObjectName(QString::fromUtf8("checkBox_7"));
-
-        verticalLayout->addWidget(checkBox_7);
-
-        lineEdit = new QLineEdit(groupBox_2);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setEnabled(false);
-
-        verticalLayout->addWidget(lineEdit);
-
-        groupBox_3 = new QGroupBox(StartupDialog);
-        groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
-        groupBox_3->setGeometry(QRect(10, 190, 242, 181));
-        verticalLayout_2 = new QVBoxLayout(groupBox_3);
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        horizontalLayout = new QHBoxLayout();
+        groupBox->setGeometry(QRect(0, 0, 181, 63));
+        horizontalLayout = new QHBoxLayout(groupBox);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        label = new QLabel(groupBox_3);
-        label->setObjectName(QString::fromUtf8("label"));
+        monitor = new QComboBox(groupBox);
+        monitor->setObjectName(QString::fromUtf8("monitor"));
 
-        horizontalLayout->addWidget(label);
+        horizontalLayout->addWidget(monitor);
 
-        comboBox_2 = new QComboBox(groupBox_3);
-        comboBox_2->setObjectName(QString::fromUtf8("comboBox_2"));
+        groupBox_2 = new QGroupBox(page);
+        groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
+        groupBox_2->setGeometry(QRect(190, 0, 251, 63));
+        horizontalLayout_2 = new QHBoxLayout(groupBox_2);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        res = new QComboBox(groupBox_2);
+        res->setObjectName(QString::fromUtf8("res"));
+        res->setEnabled(false);
 
-        horizontalLayout->addWidget(comboBox_2);
+        horizontalLayout_2->addWidget(res);
 
+        windowed = new QCheckBox(groupBox_2);
+        windowed->setObjectName(QString::fromUtf8("windowed"));
 
-        verticalLayout_2->addLayout(horizontalLayout);
+        horizontalLayout_2->addWidget(windowed);
 
-        checkBox_2 = new QCheckBox(groupBox_3);
-        checkBox_2->setObjectName(QString::fromUtf8("checkBox_2"));
+        groupBox_5 = new QGroupBox(page);
+        groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
+        groupBox_5->setGeometry(QRect(0, 70, 181, 63));
+        horizontalLayout_7 = new QHBoxLayout(groupBox_5);
+        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
+        label_6 = new QLabel(groupBox_5);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
 
-        verticalLayout_2->addWidget(checkBox_2);
+        horizontalLayout_7->addWidget(label_6);
 
-        checkBox_3 = new QCheckBox(groupBox_3);
-        checkBox_3->setObjectName(QString::fromUtf8("checkBox_3"));
+        timeout = new QSpinBox(groupBox_5);
+        timeout->setObjectName(QString::fromUtf8("timeout"));
+        timeout->setMaximum(10000);
+        timeout->setValue(3);
 
-        verticalLayout_2->addWidget(checkBox_3);
+        horizontalLayout_7->addWidget(timeout);
 
-        checkBox_5 = new QCheckBox(groupBox_3);
-        checkBox_5->setObjectName(QString::fromUtf8("checkBox_5"));
+        label_7 = new QLabel(groupBox_5);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
 
-        verticalLayout_2->addWidget(checkBox_5);
+        horizontalLayout_7->addWidget(label_7);
 
-        checkBox_6 = new QCheckBox(groupBox_3);
-        checkBox_6->setObjectName(QString::fromUtf8("checkBox_6"));
+        toolBox->addItem(page, QString::fromUtf8("General"));
+        page_2 = new QWidget();
+        page_2->setObjectName(QString::fromUtf8("page_2"));
+        page_2->setGeometry(QRect(0, 0, 501, 195));
+        groupBox_4 = new QGroupBox(page_2);
+        groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
+        groupBox_4->setGeometry(QRect(0, 0, 221, 63));
+        horizontalLayout_6 = new QHBoxLayout(groupBox_4);
+        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
+        mssa = new QComboBox(groupBox_4);
+        mssa->setObjectName(QString::fromUtf8("mssa"));
 
-        verticalLayout_2->addWidget(checkBox_6);
+        horizontalLayout_6->addWidget(mssa);
 
-        checkBox_4 = new QCheckBox(StartupDialog);
-        checkBox_4->setObjectName(QString::fromUtf8("checkBox_4"));
-        checkBox_4->setGeometry(QRect(250, 360, 171, 23));
-        checkBox_4->setChecked(true);
+        floor = new QCheckBox(page_2);
+        floor->setObjectName(QString::fromUtf8("floor"));
+        floor->setGeometry(QRect(0, 70, 171, 23));
+        labels = new QCheckBox(page_2);
+        labels->setObjectName(QString::fromUtf8("labels"));
+        labels->setGeometry(QRect(180, 70, 201, 23));
+        toolBox->addItem(page_2, QString::fromUtf8("Rendering"));
+        page_3 = new QWidget();
+        page_3->setObjectName(QString::fromUtf8("page_3"));
+        page_3->setGeometry(QRect(0, 0, 501, 175));
+        paths = new QListWidget(page_3);
+        paths->setObjectName(QString::fromUtf8("paths"));
+        paths->setGeometry(QRect(0, 0, 401, 141));
+        addfolder = new QPushButton(page_3);
+        addfolder->setObjectName(QString::fromUtf8("addfolder"));
+        addfolder->setGeometry(QRect(410, 0, 90, 27));
+        removefolder = new QPushButton(page_3);
+        removefolder->setObjectName(QString::fromUtf8("removefolder"));
+        removefolder->setGeometry(QRect(410, 30, 90, 27));
+        subdirs = new QCheckBox(page_3);
+        subdirs->setObjectName(QString::fromUtf8("subdirs"));
+        subdirs->setGeometry(QRect(0, 150, 191, 23));
+        moveup = new QToolButton(page_3);
+        moveup->setObjectName(QString::fromUtf8("moveup"));
+        moveup->setGeometry(QRect(410, 70, 24, 23));
+        moveup->setArrowType(Qt::UpArrow);
+        movedown = new QToolButton(page_3);
+        movedown->setObjectName(QString::fromUtf8("movedown"));
+        movedown->setGeometry(QRect(410, 100, 24, 23));
+        movedown->setArrowType(Qt::DownArrow);
+        toolBox->addItem(page_3, QString::fromUtf8("Photos"));
 
         retranslateUi(StartupDialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), StartupDialog, SLOT(accept()));
         QObject::connect(buttonBox, SIGNAL(rejected()), StartupDialog, SLOT(reject()));
+        QObject::connect(windowed, SIGNAL(toggled(bool)), res, SLOT(setEnabled(bool)));
+
+        toolBox->setCurrentIndex(2);
+
 
         QMetaObject::connectSlotsByName(StartupDialog);
     } // setupUi
@@ -147,26 +192,41 @@ public:
     void retranslateUi(QDialog *StartupDialog)
     {
         StartupDialog->setWindowTitle(QApplication::translate("StartupDialog", "Dialog", 0, QApplication::UnicodeUTF8));
-        groupBox->setStyleSheet(QString());
+        dontshow->setText(QApplication::translate("StartupDialog", "Don't show this again", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("StartupDialog", "Monitor", 0, QApplication::UnicodeUTF8));
-        comboBox->clear();
-        comboBox->insertItems(0, QStringList()
-         << QApplication::translate("StartupDialog", "(Default)", 0, QApplication::UnicodeUTF8)
+        groupBox_2->setTitle(QApplication::translate("StartupDialog", "Window", 0, QApplication::UnicodeUTF8));
+        res->clear();
+        res->insertItems(0, QStringList()
+         << QApplication::translate("StartupDialog", "640x480", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("StartupDialog", "800x600", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("StartupDialog", "1024x768", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("StartupDialog", "1024x1024", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("StartupDialog", "1280x720", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("StartupDialog", "1280x800", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("StartupDialog", "1440x900", 0, QApplication::UnicodeUTF8)
         );
-        groupBox_2->setTitle(QApplication::translate("StartupDialog", "Photo Management", 0, QApplication::UnicodeUTF8));
-        checkBox->setText(QApplication::translate("StartupDialog", "Scan sub-directories (may be slow)", 0, QApplication::UnicodeUTF8));
-        checkBox_7->setText(QApplication::translate("StartupDialog", "Exlude which contains (RegExp):", 0, QApplication::UnicodeUTF8));
-        groupBox_3->setTitle(QApplication::translate("StartupDialog", "Rendering", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("StartupDialog", "Anti-Aliasing", 0, QApplication::UnicodeUTF8));
-        comboBox_2->clear();
-        comboBox_2->insertItems(0, QStringList()
-         << QApplication::translate("StartupDialog", "(None)", 0, QApplication::UnicodeUTF8)
+        windowed->setText(QApplication::translate("StartupDialog", "Windowed", 0, QApplication::UnicodeUTF8));
+        groupBox_5->setTitle(QApplication::translate("StartupDialog", "Slide Show", 0, QApplication::UnicodeUTF8));
+        label_6->setText(QApplication::translate("StartupDialog", "Every", 0, QApplication::UnicodeUTF8));
+        label_7->setText(QApplication::translate("StartupDialog", "seconds", 0, QApplication::UnicodeUTF8));
+        toolBox->setItemText(toolBox->indexOf(page), QApplication::translate("StartupDialog", "General", 0, QApplication::UnicodeUTF8));
+        groupBox_4->setTitle(QApplication::translate("StartupDialog", "Multi-Sampling (Anti-Aliasing)", 0, QApplication::UnicodeUTF8));
+        mssa->clear();
+        mssa->insertItems(0, QStringList()
+         << QApplication::translate("StartupDialog", "(none)", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("StartupDialog", "2x", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("StartupDialog", "4x", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("StartupDialog", "8x", 0, QApplication::UnicodeUTF8)
         );
-        checkBox_2->setText(QApplication::translate("StartupDialog", "Reflective ground", 0, QApplication::UnicodeUTF8));
-        checkBox_3->setText(QApplication::translate("StartupDialog", "Animations", 0, QApplication::UnicodeUTF8));
-        checkBox_5->setText(QApplication::translate("StartupDialog", "Polaroid frames (a la Picasa)", 0, QApplication::UnicodeUTF8));
-        checkBox_6->setText(QApplication::translate("StartupDialog", "Show file names", 0, QApplication::UnicodeUTF8));
-        checkBox_4->setText(QApplication::translate("StartupDialog", "Don't show this again", 0, QApplication::UnicodeUTF8));
+        floor->setText(QApplication::translate("StartupDialog", "Render reflective floor", 0, QApplication::UnicodeUTF8));
+        labels->setText(QApplication::translate("StartupDialog", "Render labels (file names)", 0, QApplication::UnicodeUTF8));
+        toolBox->setItemText(toolBox->indexOf(page_2), QApplication::translate("StartupDialog", "Rendering", 0, QApplication::UnicodeUTF8));
+        addfolder->setText(QApplication::translate("StartupDialog", "Add Folder", 0, QApplication::UnicodeUTF8));
+        removefolder->setText(QApplication::translate("StartupDialog", "Remove", 0, QApplication::UnicodeUTF8));
+        subdirs->setText(QApplication::translate("StartupDialog", "Dive into sub-directories", 0, QApplication::UnicodeUTF8));
+        moveup->setText(QApplication::translate("StartupDialog", "...", 0, QApplication::UnicodeUTF8));
+        movedown->setText(QApplication::translate("StartupDialog", "...", 0, QApplication::UnicodeUTF8));
+        toolBox->setItemText(toolBox->indexOf(page_3), QApplication::translate("StartupDialog", "Photos", 0, QApplication::UnicodeUTF8));
         Q_UNUSED(StartupDialog);
     } // retranslateUi
 

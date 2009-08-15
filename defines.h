@@ -33,67 +33,10 @@
 	This file is part of Slider3D.
 
 ==============================================================================*/
-#ifndef TEXTUREMANAGER_H
-#define TEXTUREMANAGER_H
+#ifndef DEFINES_H
+#define DEFINES_H
 
-#include <QtCore/QString>
-#include <QtCore/QStringList>
-#include <QtCore/QHash>
-#include <QtCore/QMap>
+//! Enable / Disable Debug Mode
+//#define _DEBUG
 
-#include "texture.h"
-
-namespace GL {
-
-//! Array Definition
-/*!
-	QMap is preferred over QHash because it is
-	sorted by key, in this case the actual
-	filenames, this is important because the
-	order must match the order from the actual
-	directory listing ...
-
-	If the order is not important, it can be
-	switched to QHash without too much hassle.
-*/
-typedef QMap<QString,Texture *> TextureArray;
-
-class TextureManager
-{
-public:
-	TextureManager();
-	virtual ~TextureManager();
-
-	virtual void scanDir(const QString &pDir, const bool pRecursive);
-
-	virtual int getCount( void ) const;
-
-	virtual TextureArray::const_iterator getBegin(void) const;
-	virtual TextureArray::const_iterator getEnd(void) const;
-
-	virtual TextureArray::const_iterator find( const QString &pFileName ) const;
-	virtual Texture *findTexture( const QString &pFileName ) const;
-
-	virtual Texture *getTexture(const TextureArray::const_iterator &pTexture) const;
-	//virtual Texture *getDefaultTexture( void ) const;
-
-	virtual bool remove( const QString &pFileName );
-	virtual void removeAll( void );
-
-	static TextureManager &getInstance( void )
-	{
-		static TextureManager staticTextureManager;
-		return staticTextureManager;
-	}
-
-protected:
-	Texture *mEmptyTexture;
-	TextureArray mTextures;
-
-	QString mBaseDir;
-	int mNumTextures;
-};
-
-/*GL*/ }
-
-#endif // TEXTUREMANAGER_H
+#endif // DEFINES_H

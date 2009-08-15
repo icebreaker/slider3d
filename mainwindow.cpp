@@ -36,12 +36,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "canvas.h"
+#include "settings.h"
 
 using namespace GL;
 
 MainWindow::MainWindow(QWidget *pParent)
 	: QMainWindow(pParent), mUi(new Ui::MainWindow)
 {
+	Settings *lSettings = &Settings::getInstance();
 
 	mUi->setupUi(this);
 
@@ -49,7 +51,7 @@ MainWindow::MainWindow(QWidget *pParent)
 	setWindowTitle( "-== Slider3D ==-" );
 
 	//! set initial window size
-	setMinimumSize(1280,720);
+	setMinimumSize(lSettings->mWidth,lSettings->mHeight);
 	//setMaximumSize(800,600);
 
 	//! new GL Canvas

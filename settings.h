@@ -33,67 +33,73 @@
 	This file is part of Slider3D.
 
 ==============================================================================*/
-#ifndef TEXTUREMANAGER_H
-#define TEXTUREMANAGER_H
+#ifndef SETTINGS_H
+#define SETTINGS_H
 
 #include <QtCore/QString>
 #include <QtCore/QStringList>
-#include <QtCore/QHash>
-#include <QtCore/QMap>
 
-#include "texture.h"
-
-namespace GL {
-
-//! Array Definition
+//! Settings Class
 /*!
-	QMap is preferred over QHash because it is
-	sorted by key, in this case the actual
-	filenames, this is important because the
-	order must match the order from the actual
-	directory listing ...
+	Handles saving/loading of settings
+	in an simple & clean XML structure.
 
-	If the order is not important, it can be
-	switched to QHash without too much hassle.
+	All variables are public, so they can be
+	easily accessed in other modules without
+	much overhead.
 */
-typedef QMap<QString,Texture *> TextureArray;
-
-class TextureManager
+class Settings
 {
 public:
-	TextureManager();
-	virtual ~TextureManager();
-
-	virtual void scanDir(const QString &pDir, const bool pRecursive);
-
-	virtual int getCount( void ) const;
-
-	virtual TextureArray::const_iterator getBegin(void) const;
-	virtual TextureArray::const_iterator getEnd(void) const;
-
-	virtual TextureArray::const_iterator find( const QString &pFileName ) const;
-	virtual Texture *findTexture( const QString &pFileName ) const;
-
-	virtual Texture *getTexture(const TextureArray::const_iterator &pTexture) const;
-	//virtual Texture *getDefaultTexture( void ) const;
-
-	virtual bool remove( const QString &pFileName );
-	virtual void removeAll( void );
-
-	static TextureManager &getInstance( void )
+	//! Constructor
+	Settings();
+	//! Destructor
+	virtual ~Settings();
+	//! Load Settings XML
+	/*!
+		\param pFileName xml file to load the settings from
+	*/
+	virtual bool load(const QString &pFileName="");
+	//! Save Settings XML
+	/*!
+		\param pFileName xml file to save the settings to
+	*/
+	virtual bool save(const QString &pFileName="");
+	//! Get The Unique Settings Instance
+	static Settings &getInstance( void )
 	{
-		static TextureManager staticTextureManager;
-		return staticTextureManager;
-	}
+		static Settings lStaticSettings;
+		return lStaticSettings;
+	};
 
 protected:
-	Texture *mEmptyTexture;
-	TextureArray mTextures;
+	QString mConfigFile;
 
-	QString mBaseDir;
-	int mNumTextures;
+public:
+	//! Monitor Number (-1 == default
+	int mMonitor;
+	//! Slideshow Timeout
+	int mTimeout;
+	//! Windowed Mode
+	bool mWindowed;
+	//! Screen Width (in windowed mode)
+	int mWidth;
+	//! Screen Height (in windowed mode)
+	int mHeight;
+	//! Multi-Sampling (anti-aliasing, 0 == disabled, automatically disabled if not available)
+	int mMSSA;
+	//! Render floor or not (automatically disabled if no stencil buffer is available)
+	bool mFloor;
+	//! Render labels or not (file names)
+	bool mLabels;
+	//! Maximum Texture Size (0 == auto)
+	int mMaxTexSize;
+	//! Registered Photo Paths to Scan
+	QStringList mPaths;
+	//! Whetever to dive into sub directories or not
+	bool mSubDirs;
+	//! Show / Hide configuration dialog on start-up
+	bool mDontShow;
 };
 
-/*GL*/ }
-
-#endif // TEXTUREMANAGER_H
+#endif // SETTINGS_H

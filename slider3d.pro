@@ -11,13 +11,16 @@ SOURCES += main.cpp \
     texture.cpp \
     canvas.cpp \
     slider.cpp \
-    startupdialog.cpp
+    startupdialog.cpp \
+    settings.cpp
 HEADERS += mainwindow.h \
     texturemanager.h \
     texture.h \
     canvas.h \
     types.h \
     slider.h \
-    startupdialog.h
+    startupdialog.h \
+    settings.h \
+    defines.h
 FORMS += mainwindow.ui \
     startupdialog.ui

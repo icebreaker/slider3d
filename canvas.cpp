@@ -40,6 +40,8 @@
 #include <QtGui/QApplication>
 
 #include "slider.h"
+#include "settings.h"
+#include "defines.h"
 
 using namespace GL;
 
@@ -73,6 +75,8 @@ Canvas::~Canvas()
 
 void Canvas::initializeGL(void)
 {
+	Settings *lSettings = &Settings::getInstance();
+
 	glShadeModel(GL_SMOOTH);
 
 	glClearDepth(1.0f);
@@ -102,28 +106,50 @@ void Canvas::initializeGL(void)
 	glEnable(GL_POLYGON_SMOOTH);
 	glHint(GL_POLYGON_SMOOTH_HINT,GL_NICEST);
 
-	glEnable(GL_MULTISAMPLE);
-
+	if( lSettings->mMSSA )
 	{
-		int lBufs;
-		int lSamples;
-		glGetIntegerv(GL_SAMPLE_BUFFERS, &lBufs);
-		glGetIntegerv(GL_SAMPLES, &lSamples);
-		qDebug("Success: [Canvas] %d buffers and %d samples", lBufs, lSamples);
+		glEnable(GL_MULTISAMPLE);
+
+		{
+			int lBufs;
+			int lSamples;
+			glGetIntegerv(GL_SAMPLE_BUFFERS, &lBufs);
+			glGetIntegerv(GL_SAMPLES, &lSamples);
+#ifdef _DEBUG
+			qDebug("Success: [Canvas] %d buffers and %d samples", lBufs, lSamples);
+#endif
+
+			if( !lBufs || !lSamples ) // not available?
+				lSettings->mMSSA = 0;
+		}
 	}
 
+	if( lSettings->mFloor )
 	{
 		int lStencil;
 		glGetIntegerv(GL_STENCIL_BITS,&lStencil);
+#ifdef _DEBUG
 		qDebug("Success: [Canvas] %d stencil bits", lStencil);
+#endif
+
+		if( !lStencil ) // not available?
+			lSettings->mFloor = 0;
 	}
 
-	mSlider = new Slider(QApplication::applicationDirPath(),10);
-	//mSlider = new Slider("/home/icebreaker/Pictures/valerie2",10);
-	//mSlider = new Slider("/home/icebreaker/Pictures/valerie",10);
-	//mSlider = new Slider("/media/FreeAgent Drive/home/Stuff/My Pictures/Wallpapers/Ubuntu Wallpapers/Goth Chick",10);
-	//mSlider = new Slider("/home/icebreaker/Desktop/VOID SPACE/kepek",10);
-	//mSlider = new Slider("/home/icebreaker/Pictures/ndn/ndn023",10);
+	{
+		int lTexSize;
+		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &lTexSize);
+#ifdef _DEBUG
+		qDebug("Success: [Canvas] Maximum texture size is %dx%d",lTexSize,lTexSize);
+#endif
+
+		if( !lSettings->mMaxTexSize ||
+			lSettings->mMaxTexSize > lTexSize ) // auto OR bigger than available?
+
+			lSettings->mMaxTexSize = lTexSize;
+	}
+
+	mSlider = new Slider(10);
 }
 
 void Canvas::resizeGL(int pWidth, int pHeight)

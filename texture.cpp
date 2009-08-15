@@ -39,6 +39,9 @@
 #include <QtGui/QImage>
 #include <QtCore/QDebug>
 
+#include "settings.h"
+#include "defines.h"
+
 using namespace GL;
 
 Texture::Texture(const QString &pFileName) :	mRefCount(1),
@@ -67,7 +70,9 @@ QString &Texture::getFileName(void)
 
 bool Texture::load( const QString &pFileName, bool pClamp )
 {
+#ifdef _DEBUG
 	qDebug() << "Loading: [Texture] " << pFileName;
+#endif
 
 	if( pFileName.isEmpty() )
 		return false;
@@ -86,15 +91,30 @@ bool Texture::load( const QString &pFileName, bool pClamp )
 	mHeight = lImage.height();
 	mSize = Vec2D(mWidth,mHeight);
 
-	if( mWidth >= 1024 || mHeight >= 1024 )
+	int lMaxTexSize = Settings::getInstance().mMaxTexSize;
+	if( lMaxTexSize >= 1024 )
 	{
-		qDebug() << "Resizing to 1024x1024 ...";
-		lImage.scaled(1024,1024);
+		if( mWidth >= 1024 || mHeight >= 1024 )
+		{
+#ifdef _DEBUG
+			qDebug() << "Resizing to 1024x1024 ...";
+#endif
+			lImage.scaled(1024,1024);
+		}
+		else
+		{
+#ifdef _DEBUG
+			qDebug() << "Resizing to 512x512 ...";
+#endif
+			lImage.scaled(512,512);
+		}
 	}
 	else
 	{
-		qDebug() << "Resizing to 512x512 ...";
-		lImage.scaled(512,512);
+#ifdef _DEBUG
+		qDebug() << "Resizing to " << lMaxTexSize << "," << lMaxTexSize << " ...";
+#endif
+		lImage.scaled(lMaxTexSize,lMaxTexSize);
 	}
 
 	lImageTemp = QGLWidget::convertToGLFormat( lImage );
@@ -139,7 +159,9 @@ bool Texture::free( void )
 		glDeleteTextures(1,&mTextureId);
 		mTextureId = 0;
 
+#ifdef _DEBUG
 		qDebug() << "Freeing: [Texture] " << mFileName;
+#endif
 
 		return true;
 	}

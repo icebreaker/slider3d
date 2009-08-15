@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>426</width>
-    <height>391</height>
+    <width>614</width>
+    <height>310</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>520</x>
      <y>10</y>
      <width>81</width>
      <height>101</height>
@@ -29,140 +29,11 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QGroupBox" name="groupBox">
+  <widget class="QCheckBox" name="dontshow">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>151</width>
-     <height>63</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string/>
-   </property>
-   <property name="title">
-    <string>Monitor</string>
-   </property>
-   <property name="flat">
-    <bool>false</bool>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout_3">
-    <item>
-     <widget class="QComboBox" name="comboBox">
-      <item>
-       <property name="text">
-        <string>(Default)</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_2">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>70</y>
-     <width>311</width>
-     <height>121</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Photo Management</string>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QCheckBox" name="checkBox">
-      <property name="text">
-       <string>Scan sub-directories (may be slow)</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="checkBox_7">
-      <property name="text">
-       <string>Exlude which contains (RegExp):</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QLineEdit" name="lineEdit">
-      <property name="enabled">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QGroupBox" name="groupBox_3">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>190</y>
-     <width>242</width>
-     <height>181</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Rendering</string>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout_2">
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Anti-Aliasing</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QComboBox" name="comboBox_2">
-        <item>
-         <property name="text">
-          <string>(None)</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="checkBox_2">
-      <property name="text">
-       <string>Reflective ground</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="checkBox_3">
-      <property name="text">
-       <string>Animations</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="checkBox_5">
-      <property name="text">
-       <string>Polaroid frames (a la Picasa)</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QCheckBox" name="checkBox_6">
-      <property name="text">
-       <string>Show file names</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_4">
-   <property name="geometry">
-    <rect>
-     <x>250</x>
-     <y>360</y>
+     <x>430</x>
+     <y>280</y>
      <width>171</width>
      <height>23</height>
     </rect>
@@ -171,8 +42,327 @@
     <string>Don't show this again</string>
    </property>
    <property name="checked">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
+  </widget>
+  <widget class="QToolBox" name="toolBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>501</width>
+     <height>271</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>2</number>
+   </property>
+   <widget class="QWidget" name="page">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>501</width>
+      <height>195</height>
+     </rect>
+    </property>
+    <attribute name="label">
+     <string>General</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>181</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Monitor</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QComboBox" name="monitor"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>0</y>
+       <width>251</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Window</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QComboBox" name="res">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <item>
+         <property name="text">
+          <string>640x480</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>800x600</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1024x768</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1024x1024</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1280x720</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1280x800</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1440x900</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="windowed">
+        <property name="text">
+         <string>Windowed</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_5">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>70</y>
+       <width>181</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Slide Show</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <item>
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Every</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="timeout">
+        <property name="maximum">
+         <number>10000</number>
+        </property>
+        <property name="value">
+         <number>3</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>seconds</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>501</width>
+      <height>195</height>
+     </rect>
+    </property>
+    <attribute name="label">
+     <string>Rendering</string>
+    </attribute>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>221</width>
+       <height>63</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Multi-Sampling (Anti-Aliasing)</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QComboBox" name="mssa">
+        <item>
+         <property name="text">
+          <string>(none)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2x</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>4x</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>8x</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QCheckBox" name="floor">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>70</y>
+       <width>171</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Render reflective floor</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="labels">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>70</y>
+       <width>201</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Render labels (file names)</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>501</width>
+      <height>175</height>
+     </rect>
+    </property>
+    <attribute name="label">
+     <string>Photos</string>
+    </attribute>
+    <widget class="QListWidget" name="paths">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>401</width>
+       <height>141</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="addfolder">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>0</y>
+       <width>90</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add Folder</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="removefolder">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>30</y>
+       <width>90</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Remove</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="subdirs">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>150</y>
+       <width>191</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Dive into sub-directories</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="moveup">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>70</y>
+       <width>24</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>...</string>
+     </property>
+     <property name="arrowType">
+      <enum>Qt::UpArrow</enum>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="movedown">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>100</y>
+       <width>24</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>...</string>
+     </property>
+     <property name="arrowType">
+      <enum>Qt::DownArrow</enum>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>
@@ -206,6 +396,22 @@
     <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>windowed</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>res</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>271</x>
+     <y>80</y>
     </hint>
    </hints>
   </connection>

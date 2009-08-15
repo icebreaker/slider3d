@@ -38,24 +38,29 @@
 #include <QtCore/QDebug>
 #include "canvas.h"
 #include "types.h"
+#include "defines.h"
 
 using namespace GL;
 
-Slider::Slider(const QString &pDir, const int pMax) :	mBegin(0),
-														mEnd(0),
-														mCurrent(0),
-														mMaximum(pMax),
-														mHalf(0),
-														mWorking(false),
-														mTexMan(0),
-														mText(""),
-														mSlideShow(false)
+Slider::Slider(const int pMax) :	mBegin(0),
+									mEnd(0),
+									mCurrent(0),
+									mMaximum(pMax),
+									mHalf(0),
+									mWorking(false),
+									mTexMan(0),
+									mText(""),
+									mSlideShow(false),
+									mSettings(0)
 {
 	// Get and store the unique instance
 	mTexMan = &TextureManager::getInstance();
+	mSettings = &Settings::getInstance();
 
-	// setup ...
-	mTexMan->setBaseDir(pDir,true);
+	// scan all directories --> MOVE THIS INTO A SEPARATE WORKER THREAD
+	int lNumPaths = mSettings->mPaths.count();
+	for(int i=0;i<lNumPaths;i++)
+		mTexMan->scanDir(mSettings->mPaths[i],mSettings->mSubDirs);
 
 	// compute half
 	mHalf = static_cast<int>(mMaximum/2);
@@ -84,7 +89,9 @@ Slider::Slider(const QString &pDir, const int pMax) :	mBegin(0),
 
 	mText = "";
 
+#ifdef _DEBUG
 	qDebug() << "Success: [Slider] Created ...";
+#endif
 
 	connect(&mNextTimer, SIGNAL(timeout()), this, SLOT(autoNext()));
 	connect(&mPrevTimer, SIGNAL(timeout()), this, SLOT(autoPrev()));
@@ -92,7 +99,9 @@ Slider::Slider(const QString &pDir, const int pMax) :	mBegin(0),
 
 Slider::~Slider()
 {
+#ifdef _DEBUG
 	qDebug() << "Success: [Slider] Destroyed ...";
+#endif
 
 	mLeftStack.clear();
 	mRightStack.clear();
@@ -161,7 +170,8 @@ void Slider::render(Canvas *pCanvas)
 	if( mWorking )
 		return;
 
-	glEnable(GL_MULTISAMPLE); // make sure it's ENABLED
+	if( mSettings->mMSSA )
+		glEnable(GL_MULTISAMPLE); // make sure it's ENABLED
 
 	gluLookAt(0.0f,  2.0f, 0.8f,
 			  0.0f,  2.0f,-2.0f,
@@ -170,24 +180,27 @@ void Slider::render(Canvas *pCanvas)
 	renderScene(pCanvas);
 	//test(false);
 
-	glEnable(GL_STENCIL_TEST);
-	glColorMask(0, 0, 0, 0);
-	glDisable(GL_DEPTH_TEST);
-	glStencilFunc(GL_ALWAYS, 1, 1);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-	renderFloor(pCanvas);
+	if( mSettings->mFloor )
+	{
+		glEnable(GL_STENCIL_TEST);
+		glColorMask(0, 0, 0, 0);
+		glDisable(GL_DEPTH_TEST);
+		glStencilFunc(GL_ALWAYS, 1, 1);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+		renderFloor(pCanvas);
 
-	glColorMask(1, 1, 1, 1);
-	glEnable(GL_DEPTH_TEST);
-	glStencilFunc(GL_EQUAL, 1, 1);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-	renderScene(pCanvas,true);
-	//test(true);
-	glDisable(GL_STENCIL_TEST);
+		glColorMask(1, 1, 1, 1);
+		glEnable(GL_DEPTH_TEST);
+		glStencilFunc(GL_EQUAL, 1, 1);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+		renderScene(pCanvas,true);
+		//test(true);
+		glDisable(GL_STENCIL_TEST);
 
-	glEnable(GL_BLEND);
-	renderFloor(pCanvas,0.7f);
-	glDisable(GL_BLEND);
+		glEnable(GL_BLEND);
+		renderFloor(pCanvas,0.7f);
+		glDisable(GL_BLEND);
+	}
 
 	pCanvas->drawText(mText);
 }
@@ -215,7 +228,9 @@ bool Slider::next(void)
 	{
 		mCurrent = mLeftStack.front();
 		Texture *lTexture = mTexMan->getTexture(mCurrent);
-		mText = lTexture->getBaseName();
+
+		if( mSettings->mLabels )
+			mText = lTexture->getBaseName();
 
 		Photo lNext = mLeftStack.back();
 		if( --lNext != mEnd )
@@ -253,7 +268,9 @@ bool Slider::prev(void)
 		mCurrent = mRightStack.front();
 
 		Texture *lTexture = mTexMan->getTexture(mCurrent);
-		mText = lTexture->getBaseName();
+
+		if( mSettings->mLabels )
+			mText =	lTexture->getBaseName();
 
 		Photo lPrev = mRightStack.back();
 		if( ++lPrev != mEnd )
@@ -272,7 +289,7 @@ void Slider::autoNext(void)
 	if( !next() )
 	{
 		mNextTimer.stop();
-		mPrevTimer.start(3000);
+		mPrevTimer.start(mSettings->mTimeout*1000);
 	}
 }
 
@@ -281,7 +298,7 @@ void Slider::autoPrev(void)
 	if( !prev() )
 	{
 		mPrevTimer.stop();
-		mNextTimer.start(3000);
+		mNextTimer.start(mSettings->mTimeout*1000);
 	}
 }
 
@@ -291,7 +308,7 @@ void Slider::slideShowOnOff(void)
 
 	if( mSlideShow )
 	{
-		mNextTimer.start(3000);
+		mNextTimer.start(mSettings->mTimeout*1000);
 	}
 	else
 	{
@@ -299,7 +316,10 @@ void Slider::slideShowOnOff(void)
 		mPrevTimer.stop();
 	}
 
+#ifdef _DEBUG
 	qDebug() << "SlideShow: " << ((mSlideShow)?"on":"off");
+	qDebug() << "SlideShow Timeout:" << mSettings->mTimeout << " seconds ...";
+#endif
 }
 
 void Slider::renderStack(Canvas *pCanvas,
