@@ -3,6 +3,9 @@ Copyright (c) 2009, Mihail Szabolcs
 
 QT+OpenGL
 
+UPDATE: 8/16/2009
+    * added configuration dialog with many configurable options
+
 Features (as of now):
 
     * scans the current directory for photos (png & jpg)
